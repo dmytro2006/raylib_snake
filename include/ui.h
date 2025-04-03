@@ -36,42 +36,41 @@ namespace UI {
 
     class Button {
     public:
-        Button(const std::string &text, Vector2 &position, Vector2 &size, Color &textColor,
-               Color backgroundColor, float fontSize): position(position), size(size), textColor(textColor),
+        Button(const std::string &text, Vector2 position, Vector2 size, Color textColor,
+               Color backgroundColor, float fontSize): label(text, textColor, position, size, fontSize),
+                                                       position(position),
+                                                       size(size),
                                                        backgroundColor(backgroundColor),
                                                        outlineColor(WHITE),
                                                        outlineThickness(0),
-                                                       isOutlined(false),
-                                                       fontSize(fontSize), text(text) {
+                                                       outlined(false) {
         };
 
-        Button(const std::string &text, Vector2 &position, Vector2 &size, Color &textColor,
+        Button(const std::string &text, Vector2 position, Vector2 size, Color textColor,
                Color backgroundColor, float fontSize,
-               Color outlineColor, float outlineThickness): position(position),
-                                                            size(size), textColor(textColor),
+               Color outlineColor, float outlineThickness): label(text, textColor, position, size, fontSize),
+                                                            position(position),
+                                                            size(size),
                                                             backgroundColor(backgroundColor),
-                                                            isOutlined(true),
-                                                            fontSize(fontSize), text(text),
                                                             outlineColor(outlineColor),
-                                                            outlineThickness(outlineThickness) {
+                                                            outlineThickness(outlineThickness),
+                                                            outlined(true) {
         } ;
 
         ~Button() = default;
 
         void draw();
 
-        bool checkMouseCollision(Vector2 mousePosition);
+        bool checkMouseCollision(Vector2 mousePosition) const;
 
     private:
+        CentredText label;
         Vector2 position;
         Vector2 size;
-        Color textColor;
         Color backgroundColor;
         Color outlineColor;
         float outlineThickness;
-        bool isOutlined;
-        float fontSize;
-        std::string text;
+        bool outlined;
     };
 }
 

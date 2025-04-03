@@ -3,6 +3,9 @@ project(raylib_snake)
 
 set(CMAKE_CXX_STANDARD 14)
 
+# static linking
+set(CMAKE_CXX_FLAGS "-static")
+
 # Dependencies
 set(RAYLIB_VERSION 5.5)
 find_package(raylib ${RAYLIB_VERSION} QUIET) # QUIET or REQUIRED
@@ -18,8 +21,8 @@ if (NOT raylib_FOUND) # If there's none, fetch and build raylib
         set(FETCHCONTENT_QUIET NO)
         FetchContent_MakeAvailable(raylib)
         set(BUILD_EXAMPLES OFF CACHE BOOL "" FORCE) # don't build the supplied examples
-    endif()
-endif()
+    endif ()
+endif ()
 
 add_executable(raylib_snake
         src/main.cpp
@@ -36,4 +39,4 @@ if (APPLE)
     target_link_libraries(${PROJECT_NAME} "-framework IOKit")
     target_link_libraries(${PROJECT_NAME} "-framework Cocoa")
     target_link_libraries(${PROJECT_NAME} "-framework OpenGL")
-endif()
+endif ()

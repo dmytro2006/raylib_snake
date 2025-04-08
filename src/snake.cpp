@@ -80,3 +80,11 @@ void Snake::update(const Direction move_direction, const Vector2 fruit_position)
         dead = true;
     }
 }
+
+bool Snake::is_dead() const {
+    return dead;
+}
+
+bool Snake::is_occupied(Vector2 position) const {
+    return map[position.x][position.y];
+}

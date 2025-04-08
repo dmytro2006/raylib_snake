@@ -23,6 +23,8 @@ public:
 
     bool is_dead() const;
 
+    bool is_occupied(Vector2 position) const;
+
 private:
     std::deque<Vector2> snake;
     std::vector<std::vector<short> > map;

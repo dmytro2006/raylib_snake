@@ -11,7 +11,7 @@ void Fruit::generate() {
     position.y = static_cast<float>(GetRandomValue(0, GAME_AREA_HEIGHT / GRID_STEP - 1));
 }
 
-void Fruit::draw() {
+void Fruit::draw() const{
     if (!visible) return;
     DrawCircle(GAME_AREA_X + position.x * GRID_STEP + GRID_STEP / 2,
                GAME_AREA_Y + position.y * GRID_STEP + GRID_STEP / 2, APPLE_RADIUS, APPLE_COLOR);

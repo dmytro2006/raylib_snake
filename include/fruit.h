@@ -17,7 +17,7 @@ public:
 
     Vector2 get_position() const;
 
-    void draw();
+    void draw() const;
 
     void set_visible(bool visible);
 

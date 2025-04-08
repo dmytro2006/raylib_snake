@@ -25,6 +25,8 @@ public:
 
     bool is_occupied(Vector2 position) const;
 
+    int get_length() const;
+
 private:
     std::deque<Vector2> snake;
     std::vector<std::vector<short> > map;

@@ -88,3 +88,7 @@ bool Snake::is_dead() const {
 bool Snake::is_occupied(Vector2 position) const {
     return map[position.x][position.y];
 }
+
+int Snake::get_length() const {
+    return snake.size();
+}

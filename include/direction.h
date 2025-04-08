@@ -1,5 +1,5 @@
 //
-// Created by dmytr on 04/04/2025.
+// Created by dmytro2006 on 04/04/2025.
 //
 
 #ifndef DIRECTION_H

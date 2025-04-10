@@ -5,7 +5,7 @@
 #ifndef DIFFICULTY_H
 #define DIFFICULTY_H
 
-enum class DIFFICULTY {
+enum class Difficulty {
   EASY,
   MEDIUM,
   HARD

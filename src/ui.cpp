@@ -4,6 +4,9 @@
 
 #include "ui.h"
 
+#include <iostream>
+#include <ostream>
+
 void UI::draw_centred_text(const std::string &text, Vector2 position, Vector2 size, Color color, float font_size) {
     draw_centred_text(text, position, size, color, font_size, font_size / 10, GetFontDefault());
 }
@@ -16,8 +19,23 @@ void UI::draw_centred_text(const std::string &text, Vector2 position, Vector2 si
 void UI::draw_centred_text(const std::string &text, Vector2 position, Vector2 size, Color color, float font_size,
                            float spacing, Font font) {
     Vector2 text_size = MeasureTextEx(font, text.c_str(), font_size, spacing);
-    Vector2 text_position = {position.x + (size.x - text_size.x) / 2, position.y + (size.y - text_size.y) / 2};
-    DrawTextEx(font, text.c_str(), text_position, font_size, spacing, color);
+    float lines = 1;
+    for (const auto &ch: text) {
+        if (ch == '\n') lines++;
+    }
+    std::cout << lines << std::endl;
+    size_t new_line_pos = 0;
+    for (float i = 0; i < lines; i++) {
+        std::string line = text.substr(new_line_pos, text.find_first_of('\n', new_line_pos) - new_line_pos);
+        std::cout << line << std::endl << std::endl;
+        Vector2 line_size = MeasureTextEx(font, line.c_str(), font_size, spacing);
+        Vector2 text_position = {
+            position.x + (size.x - line_size.x) / 2,
+            position.y + (size.y - text_size.y) / 2 + (line_size.y + spacing) * i
+        };
+        DrawTextEx(font, line.c_str(), text_position, font_size, spacing, color);
+        new_line_pos = text.find_first_of('\n', new_line_pos) + 1;
+    }
 }
 
 void UI::draw_centred_text(const std::string &text, Vector2 position, Vector2 size, Color color, float font_size,

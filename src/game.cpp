@@ -8,8 +8,9 @@
 #include "config.h"
 
 Game::Game(const std::string &title, int width, int height, int framerate): title(title), width(width), height(height),
-                                                                            framerate(framerate), window(Window::MENU),
-                                                                            score(1), should_close(false),
+                                                                            framerate(framerate), should_close(false),
+                                                                            window(Window::MENU), score(1),
+                                                                            difficulty(Difficulty::EASY),
                                                                             movement_direction(Direction::RIGHT),
                                                                             previous_direction(Direction::RIGHT) {
     InitWindow(width, height, title.c_str());
@@ -40,6 +41,10 @@ void Game::update() {
                     break;
                 }
                 if (UI::is_pressed({150, 260}, {200, 60}, GetMousePosition())) {
+                    difficulty = static_cast<Difficulty>((static_cast<int>(difficulty) + 1) % 3);
+                    break;
+                }
+                if (UI::is_pressed({150, 340}, {200, 60}, GetMousePosition())) {
                     should_close = true;
                     break;
                 }
@@ -114,7 +119,8 @@ void Game::draw_ui() const {
         case Window::MENU:
             UI::draw_centred_text("SNAKE", {0, 40}, {WIDTH, 100}, BLACK, 80);
             UI::draw_button("START", {150, 180}, {200, 60},WHITE, RED, 40);
-            UI::draw_button("EXIT", {150, 260}, {200, 60}, WHITE, RED, 40);
+            UI::draw_button("DIFFICULTY\n" + get_difficulty_string(), {150, 260}, {200, 60}, WHITE, RED, 20);
+            UI::draw_button("EXIT", {150, 340}, {200, 60}, WHITE, RED, 40);
             break;
     }
 }
@@ -156,4 +162,16 @@ void Game::get_movement_direction() {
         movement_direction = Direction::DOWN;
         return;
     }
+}
+
+std::string Game::get_difficulty_string() const {
+    switch (difficulty) {
+        case Difficulty::EASY:
+            return "EASY";
+        case Difficulty::MEDIUM:
+            return "MEDIUM";
+        case Difficulty::HARD:
+            return "HARD";
+    }
+    return "";
 }

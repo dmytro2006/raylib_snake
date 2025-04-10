@@ -5,11 +5,11 @@
 #ifndef GAME_H
 #define GAME_H
 #include <string>
-#include <ui.h>
 
 #include "snake.h"
 #include "fruit.h"
 #include "window.h"
+#include "difficulty.h"
 
 class Game {
 public:
@@ -32,18 +32,21 @@ private:
 
     void get_movement_direction();
 
+    std::string get_difficulty_string() const;
+
     std::string title;
     int width;
     int height;
     int framerate;
-    Snake snake;
-    Fruit fruit;
-    Window window;
-    int score;
-
     bool should_close;
 
+    Window window;
+    int score;
     float delta{};
+    Difficulty difficulty;
+
+    Snake snake;
+    Fruit fruit;
 
     Direction movement_direction;
     Direction previous_direction;

@@ -27,6 +27,8 @@ public:
 
     int get_length() const;
 
+    void reset();
+
 private:
     std::deque<Vector2> snake;
     std::vector<std::vector<short> > map;

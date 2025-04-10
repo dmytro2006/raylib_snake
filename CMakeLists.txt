@@ -29,6 +29,7 @@ add_executable(raylib_snake
         src/snake.cpp
         src/fruit.cpp
         src/ui.cpp
+        src/game.cpp
 )
 
 target_include_directories(raylib_snake PUBLIC include)

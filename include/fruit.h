@@ -11,7 +11,7 @@ class Fruit {
 public:
     Fruit() = default;
 
-    ~Fruit();
+    ~Fruit() = default;
 
     void generate();
 

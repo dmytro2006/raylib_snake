@@ -8,70 +8,27 @@
 #include <string>
 
 namespace UI {
-    class CentredText {
-    public:
-        CentredText(const std::string &text, Color color, Vector2 position, Vector2 size, float fontSize): color(color),
-            text(text), fontSize(fontSize), position(position), size(size) {
-        };
+    void draw_button(const std::string &text, Vector2 position, Vector2 size, Color text_color, Color background_color,
+                     float font_size);
 
-        CentredText(const std::string &text, Color color, Vector2 position, Vector2 size, float fontSize,
-                    float spacing): color(color),
-                                    text(text), fontSize(fontSize), position(position), size(size), spacing(spacing) {
-        };
+    void draw_button(const std::string &text, Vector2 position, Vector2 size, Color text_color, Color background_color,
+                     float font_size, Color outline_color, float outline_thickness);
 
+    void draw_button(const std::string &text, Vector2 position, Vector2 size, Color text_color, Color background_color,
+                     float font_size, float spacing, Color outline_color, float outline_thickness, Font font);
 
-        ~CentredText() = default;
+    void draw_centred_text(const std::string &text, Vector2 position, Vector2 size, Color color, float font_size);
 
-        void draw();
+    void draw_centred_text(const std::string &text, Vector2 position, Vector2 size, Color color, float font_size,
+                           float spacing);
 
-    private:
-        Font font = GetFontDefault();
-        Color color;
-        std::string text;
-        float fontSize;
-        Vector2 position;
-        Vector2 size;
-        float spacing = 2;
-    };
+    void draw_centred_text(const std::string &text, Vector2 position, Vector2 size, Color color, float font_size,
+                           Font font);
 
-    class Button {
-    public:
-        Button(const std::string &text, Vector2 position, Vector2 size, Color textColor,
-               Color backgroundColor, float fontSize): label(text, textColor, position, size, fontSize),
-                                                       position(position),
-                                                       size(size),
-                                                       backgroundColor(backgroundColor),
-                                                       outlineColor(WHITE),
-                                                       outlineThickness(0),
-                                                       outlined(false) {
-        };
+    void draw_centred_text(const std::string &text, Vector2 position, Vector2 size, Color color, float font_size,
+                           float spacing, Font font);
 
-        Button(const std::string &text, Vector2 position, Vector2 size, Color textColor,
-               Color backgroundColor, float fontSize,
-               Color outlineColor, float outlineThickness): label(text, textColor, position, size, fontSize),
-                                                            position(position),
-                                                            size(size),
-                                                            backgroundColor(backgroundColor),
-                                                            outlineColor(outlineColor),
-                                                            outlineThickness(outlineThickness),
-                                                            outlined(true) {
-        } ;
-
-        ~Button() = default;
-
-        void draw();
-
-        bool checkMouseCollision(Vector2 mousePosition) const;
-
-    private:
-        CentredText label;
-        Vector2 position;
-        Vector2 size;
-        Color backgroundColor;
-        Color outlineColor;
-        float outlineThickness;
-        bool outlined;
-    };
+    bool is_pressed(Vector2 button_position, Vector2 button_size, Vector2 mouse_position);
 }
 
 #endif //UI_H

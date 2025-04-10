@@ -6,8 +6,6 @@
 #include "config.h"
 
 Snake::Snake(): direction(Direction::RIGHT) {
-    map = {GRID_SIZE_X, std::vector<short>(GRID_SIZE_Y, 0)};
-    snake.push_back({GRID_SIZE_X / 2, GRID_SIZE_Y / 2});
 }
 
 Snake::~Snake() {
@@ -73,12 +71,13 @@ void Snake::update(const Direction move_direction, const Vector2 fruit_position)
     map[snake.back().x][snake.back().y] = 0;
     snake.pop_back();
     snake.push_front(new_head);
-    map[new_head.x][new_head.y] = 1;
     if (snake.front().x < 0 || snake.front().y < 0 || snake.front().x >= GRID_SIZE_X || snake.front().y >=
-        GAME_AREA_Y ||
+        GRID_SIZE_Y ||
         map[snake.front().x][snake.front().y]) {
         dead = true;
+        return;
     }
+    map[new_head.x][new_head.y] = 1;
 }
 
 bool Snake::is_dead() const {
@@ -91,4 +90,12 @@ bool Snake::is_occupied(Vector2 position) const {
 
 int Snake::get_length() const {
     return snake.size();
+}
+
+void Snake::reset() {
+    dead = false;
+    map.clear();
+    snake.clear();
+    map = {GRID_SIZE_X, std::vector<short>(GRID_SIZE_Y, 0)};
+    snake.push_back({GRID_SIZE_X / 2, GRID_SIZE_Y / 2});
 }

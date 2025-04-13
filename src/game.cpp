@@ -11,6 +11,8 @@ Game::Game(const std::string &title, int width, int height, int framerate): titl
                                                                             framerate(framerate), should_close(false),
                                                                             window(Window::MENU), score(1),
                                                                             difficulty(Difficulty::EASY),
+                                                                            tick_time(0), max_tick_time(0),
+                                                                            min_tick_time(0),
                                                                             movement_direction(Direction::RIGHT),
                                                                             previous_direction(Direction::RIGHT) {
     InitWindow(width, height, title.c_str());
@@ -59,7 +61,8 @@ void Game::update() {
             }
             get_movement_direction();
             delta += GetFrameTime();
-            if (delta >= 0.3) {
+            tick_time = max_tick_time - (max_tick_time - min_tick_time) * score / MAX_LENGTH;
+            if (delta >= tick_time) {
                 delta = 0;
                 snake.update(movement_direction, fruit.get_position());
                 previous_direction = movement_direction;
@@ -119,7 +122,8 @@ void Game::draw_ui() const {
         case Window::MENU:
             UI::draw_centred_text("SNAKE", {0, 40}, {WIDTH, 100}, BLACK, 80);
             UI::draw_button("START", {(WIDTH - 200) / 2, 180}, {200, 60},WHITE, RED, 40);
-            UI::draw_button("DIFFICULTY\n" + get_difficulty_string(), {(WIDTH - 200) / 2, 260}, {200, 60}, WHITE, RED, 20);
+            UI::draw_button("DIFFICULTY\n" + get_difficulty_string(), {(WIDTH - 200) / 2, 260}, {200, 60}, WHITE, RED,
+                            20);
             UI::draw_button("EXIT", {(WIDTH - 200) / 2, 340}, {200, 60}, WHITE, RED, 40);
             break;
     }
@@ -137,6 +141,16 @@ void Game::draw_grid() const {
 }
 
 void Game::reset() {
+    max_tick_time = (difficulty == Difficulty::EASY
+                         ? MAX_TIME
+                         : (difficulty == Difficulty::MEDIUM
+                                ? MAX_TIME * MEDIUM_MULTIPLIER
+                                : MAX_TIME * HARD_MULTIPLIER));
+    min_tick_time = (difficulty == Difficulty::EASY
+                         ? MIN_TIME
+                         : (difficulty == Difficulty::MEDIUM
+                                ? MIN_TIME * MEDIUM_MULTIPLIER
+                                : MIN_TIME * HARD_MULTIPLIER));
     snake.reset();
     score = 1;
     delta = 0;

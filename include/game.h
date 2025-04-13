@@ -45,6 +45,10 @@ private:
     float delta{};
     Difficulty difficulty;
 
+    float tick_time;
+    float max_tick_time;
+    float min_tick_time;
+
     Snake snake;
     Fruit fruit;
 

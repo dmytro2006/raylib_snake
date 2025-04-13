@@ -1,5 +1,5 @@
 //
-// Created by dmytr on 11/04/2025.
+// Created by dmytro2006 on 11/04/2025.
 //
 
 #ifndef DIFFICULTY_H

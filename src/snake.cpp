@@ -16,32 +16,32 @@ Snake::~Snake() {
 
 void Snake::draw() const {
     for (const auto &part: snake) {
-        DrawRectangle(GAME_AREA_X + part.x * GRID_STEP, GAME_AREA_Y + part.y * GRID_STEP, GRID_STEP, GRID_STEP, LIME);
+        DrawRectangle(MARGIN_X + part.x * GRID_STEP, MARGIN_Y + part.y * GRID_STEP, GRID_STEP, GRID_STEP, LIME);
     }
     switch (direction) {
         case Direction::UP:
-            DrawCircle(GAME_AREA_X + snake[0].x * GRID_STEP + EYE_MARGIN,
-                       GAME_AREA_Y + snake[0].y * GRID_STEP + EYE_MARGIN, EYE_SIZE, BLACK);
-            DrawCircle(GAME_AREA_X + snake[0].x * GRID_STEP + GRID_STEP - EYE_MARGIN,
-                       GAME_AREA_Y + snake[0].y * GRID_STEP + EYE_MARGIN, EYE_SIZE, BLACK);
+            DrawCircle(MARGIN_X + snake[0].x * GRID_STEP + EYE_MARGIN,
+                       MARGIN_Y + snake[0].y * GRID_STEP + EYE_MARGIN, EYE_SIZE, BLACK);
+            DrawCircle(MARGIN_X + snake[0].x * GRID_STEP + GRID_STEP - EYE_MARGIN,
+                       MARGIN_Y + snake[0].y * GRID_STEP + EYE_MARGIN, EYE_SIZE, BLACK);
             break;
         case Direction::DOWN:
-            DrawCircle(GAME_AREA_X + snake[0].x * GRID_STEP + GRID_STEP - EYE_MARGIN,
-                       GAME_AREA_Y + snake[0].y * GRID_STEP + GRID_STEP - EYE_MARGIN, EYE_SIZE, BLACK);
-            DrawCircle(GAME_AREA_X + snake[0].x * GRID_STEP + EYE_MARGIN,
-                       GAME_AREA_Y + snake[0].y * GRID_STEP + GRID_STEP - EYE_MARGIN, EYE_SIZE, BLACK);
+            DrawCircle(MARGIN_X + snake[0].x * GRID_STEP + GRID_STEP - EYE_MARGIN,
+                       MARGIN_Y + snake[0].y * GRID_STEP + GRID_STEP - EYE_MARGIN, EYE_SIZE, BLACK);
+            DrawCircle(MARGIN_X + snake[0].x * GRID_STEP + EYE_MARGIN,
+                       MARGIN_Y + snake[0].y * GRID_STEP + GRID_STEP - EYE_MARGIN, EYE_SIZE, BLACK);
             break;
         case Direction::LEFT:
-            DrawCircle(GAME_AREA_X + snake[0].x * GRID_STEP + EYE_MARGIN,
-                       GAME_AREA_Y + snake[0].y * GRID_STEP + GRID_STEP - EYE_MARGIN, EYE_SIZE, BLACK);
-            DrawCircle(GAME_AREA_X + snake[0].x * GRID_STEP + EYE_MARGIN,
-                       GAME_AREA_Y + snake[0].y * GRID_STEP + EYE_MARGIN, EYE_SIZE, BLACK);
+            DrawCircle(MARGIN_X + snake[0].x * GRID_STEP + EYE_MARGIN,
+                       MARGIN_Y + snake[0].y * GRID_STEP + GRID_STEP - EYE_MARGIN, EYE_SIZE, BLACK);
+            DrawCircle(MARGIN_X + snake[0].x * GRID_STEP + EYE_MARGIN,
+                       MARGIN_Y + snake[0].y * GRID_STEP + EYE_MARGIN, EYE_SIZE, BLACK);
             break;
         case Direction::RIGHT:
-            DrawCircle(GAME_AREA_X + snake[0].x * GRID_STEP + GRID_STEP - EYE_MARGIN,
-                       GAME_AREA_Y + snake[0].y * GRID_STEP + EYE_MARGIN, EYE_SIZE, BLACK);
-            DrawCircle(GAME_AREA_X + snake[0].x * GRID_STEP + GRID_STEP - EYE_MARGIN,
-                       GAME_AREA_Y + snake[0].y * GRID_STEP + GRID_STEP - EYE_MARGIN, EYE_SIZE, BLACK);
+            DrawCircle(MARGIN_X + snake[0].x * GRID_STEP + GRID_STEP - EYE_MARGIN,
+                       MARGIN_Y + snake[0].y * GRID_STEP + EYE_MARGIN, EYE_SIZE, BLACK);
+            DrawCircle(MARGIN_X + snake[0].x * GRID_STEP + GRID_STEP - EYE_MARGIN,
+                       MARGIN_Y + snake[0].y * GRID_STEP + GRID_STEP - EYE_MARGIN, EYE_SIZE, BLACK);
             break;
     }
 }

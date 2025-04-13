@@ -3,9 +3,10 @@
 //
 
 #include "game.h"
+#include "config.h"
 
 int main() {
-    Game game("SNAKE", 500,500, 60);
+    Game game("SNAKE", WIDTH, HEIGHT, 60);
     game.play();
     return 0;
 }

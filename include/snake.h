@@ -10,6 +10,7 @@
 
 #include "raylib.h"
 #include "direction.h"
+#include "snake_shape.h"
 
 class Snake {
 public:
@@ -30,10 +31,31 @@ public:
     void reset();
 
 private:
+    void draw_head(float x, float y) const;
+
+    void draw_tail(float x, float y) const;
+
     std::deque<Vector2> snake;
+    std::deque<Snake_shape> snake_shape;
+    std::deque<Direction> directions;
     std::vector<std::vector<short> > map;
     bool dead = false;
     Direction direction;
+    Direction previous_direction;
+    Texture vertical_texture;
+    Texture horizontal_texture;
+    Texture down_right_texture;
+    Texture down_left_texture;
+    Texture up_right_texture;
+    Texture up_left_texture;
+    Texture head_up;
+    Texture head_down;
+    Texture head_left;
+    Texture head_right;
+    Texture tail_up;
+    Texture tail_down;
+    Texture tail_left;
+    Texture tail_right;
 };
 
 

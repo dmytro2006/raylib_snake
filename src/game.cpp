@@ -38,15 +38,18 @@ void Game::update() {
         case Window::MENU:
             if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
                 if (UI::is_pressed({(WIDTH - 200) / 2, 180}, {200, 60}, GetMousePosition())) {
+                    // "PLAY" button
                     window = Window::GAME;
                     reset();
                     break;
                 }
                 if (UI::is_pressed({(WIDTH - 200) / 2, 260}, {200, 60}, GetMousePosition())) {
+                    // "DIFFICULTY" button
                     difficulty = static_cast<Difficulty>((static_cast<int>(difficulty) + 1) % 3);
                     break;
                 }
                 if (UI::is_pressed({(WIDTH - 200) / 2, 340}, {200, 60}, GetMousePosition())) {
+                    // "EXIT" button
                     should_close = true;
                     break;
                 }
@@ -55,13 +58,17 @@ void Game::update() {
         case Window::GAME:
             if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
                 if (UI::is_pressed({WIDTH - MARGIN_X - 60, 5}, {60, 30}, GetMousePosition())) {
+                    // "MENU" button
                     window = Window::MENU;
                     break;
                 }
             }
-            get_movement_direction();
+
+            get_movement_direction(); // get direction from keyboard
             delta += GetFrameTime();
+            // duration of a tick depends on score and difficulty
             tick_time = max_tick_time - (max_tick_time - min_tick_time) * score / MAX_LENGTH;
+
             if (delta >= tick_time) {
                 delta = 0;
                 snake.update(movement_direction, fruit.get_position());
@@ -70,12 +77,17 @@ void Game::update() {
                     window = Window::SCORE;
                 }
                 score = snake.get_length();
-                if (snake.is_occupied(fruit.get_position()) && score < GRID_SIZE_X * GRID_SIZE_Y) {
+
+                // if snake has eaten fruit, generate new position till it's not occupied by snake
+                // at least one cell should be free
+                if (snake.is_occupied(fruit.get_position()) && score < MAX_LENGTH) {
                     do {
                         fruit.generate();
                     } while (snake.is_occupied(fruit.get_position()));
                 }
-                if (score == GRID_SIZE_X * GRID_SIZE_Y) {
+
+                // if all cells are occupied, hide fruit
+                if (score == MAX_LENGTH) {
                     fruit.set_visible(false);
                 }
             }
@@ -83,11 +95,13 @@ void Game::update() {
         case Window::SCORE:
             if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
                 if (UI::is_pressed({(WIDTH - 200) / 2, 180}, {200, 60}, GetMousePosition())) {
+                    // "RETRY" button
                     reset();
                     window = Window::GAME;
                     break;
                 }
                 if (UI::is_pressed({(WIDTH - 200) / 2, 260}, {200, 60}, GetMousePosition())) {
+                    // "MENU" button
                     window = Window::MENU;
                     break;
                 }
@@ -107,6 +121,7 @@ void Game::draw() const {
     EndDrawing();
 }
 
+// draw buttons and texts
 void Game::draw_ui() const {
     switch (window) {
         case Window::GAME:
@@ -117,7 +132,6 @@ void Game::draw_ui() const {
             UI::draw_centred_text(TextFormat("SCORE: %i", score), {0, 40}, {WIDTH, 100}, BLACK, 80);
             UI::draw_button("RETRY", {(WIDTH - 200) / 2, 180}, {200, 60}, WHITE, RED, 40);
             UI::draw_button("MENU", {(WIDTH - 200) / 2, 260}, {200, 60}, WHITE, RED, 40);
-
             break;
         case Window::MENU:
             UI::draw_centred_text("SNAKE", {0, 40}, {WIDTH, 100}, BLACK, 80);
@@ -129,6 +143,7 @@ void Game::draw_ui() const {
     }
 }
 
+// draw game grid
 void Game::draw_grid() const {
     for (int x = MARGIN_X; x <= MARGIN_X + GAME_AREA_WIDTH; x += GRID_STEP)
         DrawLineEx((Vector2){static_cast<float>(x + 1), MARGIN_Y},
@@ -140,6 +155,7 @@ void Game::draw_grid() const {
     DrawRectangleLinesEx({MARGIN_X - 3, MARGIN_Y - 3, GAME_AREA_WIDTH + 6, GAME_AREA_HEIGHT + 6}, 3, BLACK);
 }
 
+// reset the state of the game before starting a new one
 void Game::reset() {
     max_tick_time = (difficulty == Difficulty::EASY
                          ? MAX_TIME
@@ -159,6 +175,7 @@ void Game::reset() {
     } while (snake.is_occupied(fruit.get_position()));
 }
 
+// get movement direction from keyboard
 void Game::get_movement_direction() {
     if (IsKeyDown(KEY_RIGHT) && previous_direction != Direction::LEFT) {
         movement_direction = Direction::RIGHT;
@@ -174,10 +191,10 @@ void Game::get_movement_direction() {
     }
     if (IsKeyDown(KEY_DOWN) && previous_direction != Direction::UP) {
         movement_direction = Direction::DOWN;
-        return;
     }
 }
 
+// translate difficulty enum value to string
 std::string Game::get_difficulty_string() const {
     switch (difficulty) {
         case Difficulty::EASY:

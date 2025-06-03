@@ -5,7 +5,7 @@
 #include "fruit.h"
 #include "config.h"
 
-
+// generate new fruit position
 void Fruit::generate() {
     position.x = static_cast<float>(GetRandomValue(0, GAME_AREA_WIDTH / GRID_STEP - 1));
     position.y = static_cast<float>(GetRandomValue(0, GAME_AREA_HEIGHT / GRID_STEP - 1));

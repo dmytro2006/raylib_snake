@@ -168,21 +168,42 @@ int Snake::get_length() const {
     return snake.size();
 }
 
+void Snake::load_textures(const std::string& skin) {
+    vertical_texture = LoadTexture(("textures/" + skin + "/vertical.png").c_str());
+    horizontal_texture = LoadTexture(("textures/" + skin + "/horizontal.png").c_str());
+    down_right_texture = LoadTexture(("textures/" + skin + "/down_right.png").c_str());
+    down_left_texture = LoadTexture(("textures/" + skin + "/down_left.png").c_str());
+    up_right_texture = LoadTexture(("textures/" + skin + "/up_right.png").c_str());
+    up_left_texture = LoadTexture(("textures/" + skin + "/up_left.png").c_str());
+    head_up = LoadTexture(("textures/" + skin + "/head_up.png").c_str());
+    head_down = LoadTexture(("textures/" + skin + "/head_down.png").c_str());
+    head_left = LoadTexture(("textures/" + skin + "/head_left.png").c_str());
+    head_right = LoadTexture(("textures/" + skin + "/head_right.png").c_str());
+    tail_up = LoadTexture(("textures/" + skin + "/tail_up.png").c_str());
+    tail_down = LoadTexture(("textures/" + skin + "/tail_down.png").c_str());
+    tail_left = LoadTexture(("textures/" + skin + "/tail_left.png").c_str());
+    tail_right = LoadTexture(("textures/" + skin + "/tail_right.png").c_str());
+}
+
+void Snake::unload_textures() {
+    UnloadTexture(vertical_texture);
+    UnloadTexture(horizontal_texture);
+    UnloadTexture(down_right_texture);
+    UnloadTexture(down_left_texture);
+    UnloadTexture(up_right_texture);
+    UnloadTexture(up_left_texture);
+    UnloadTexture(head_up);
+    UnloadTexture(head_down);
+    UnloadTexture(head_left);
+    UnloadTexture(head_right);
+    UnloadTexture(tail_up);
+    UnloadTexture(tail_down);
+    UnloadTexture(tail_left);
+    UnloadTexture(tail_right);
+}
+
+
 void Snake::reset() {
-    vertical_texture = LoadTexture("textures/vertical.png");
-    horizontal_texture = LoadTexture("textures/horizontal.png");
-    down_right_texture = LoadTexture("textures/down_right.png");
-    down_left_texture = LoadTexture("textures/down_left.png");
-    up_right_texture = LoadTexture("textures/up_right.png");
-    up_left_texture = LoadTexture("textures/up_left.png");
-    head_up = LoadTexture("textures/head_up.png");
-    head_down = LoadTexture("textures/head_down.png");
-    head_left = LoadTexture("textures/head_left.png");
-    head_right = LoadTexture("textures/head_right.png");
-    tail_up = LoadTexture("textures/tail_up.png");
-    tail_down = LoadTexture("textures/tail_down.png");
-    tail_left = LoadTexture("textures/tail_left.png");
-    tail_right = LoadTexture("textures/tail_right.png");
     dead = false;
     map.clear();
     snake.clear();

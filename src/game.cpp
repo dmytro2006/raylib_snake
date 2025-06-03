@@ -18,9 +18,11 @@ Game::Game(const std::string &title, int width, int height, int framerate): titl
     InitWindow(width, height, title.c_str());
     SetTargetFPS(framerate);
     SetExitKey(KEY_NULL);
+    snake.load_textures("green");
 }
 
 Game::~Game() {
+    snake.unload_textures();
     CloseWindow();
 }
 

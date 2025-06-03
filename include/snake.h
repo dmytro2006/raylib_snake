@@ -7,6 +7,7 @@
 
 #include <deque>
 #include <vector>
+#include <string>
 
 #include "raylib.h"
 #include "direction.h"
@@ -30,6 +31,10 @@ public:
 
     void reset();
 
+    void load_textures(const std::string& skin);
+
+    void unload_textures();
+
 private:
     void draw_head(float x, float y) const;
 
@@ -42,6 +47,7 @@ private:
     bool dead = false;
     Direction direction;
     Direction previous_direction;
+
     Texture vertical_texture;
     Texture horizontal_texture;
     Texture down_right_texture;
@@ -52,6 +58,7 @@ private:
     Texture head_down;
     Texture head_left;
     Texture head_right;
+
     Texture tail_up;
     Texture tail_down;
     Texture tail_left;

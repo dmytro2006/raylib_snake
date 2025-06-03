@@ -24,3 +24,7 @@ void Fruit::set_visible(bool visible) {
 Vector2 Fruit::get_position() const {
     return position;
 }
+
+void Fruit::set_position(Vector2 position) {
+    this->position = position;
+}

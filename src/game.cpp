@@ -18,7 +18,7 @@ Game::Game(const std::string &title, int width, int height, int framerate): titl
     InitWindow(width, height, title.c_str());
     SetTargetFPS(framerate);
     SetExitKey(KEY_NULL);
-    snake.load_textures("green");
+    snake.load_textures("yellow");
 }
 
 Game::~Game() {
@@ -82,7 +82,7 @@ void Game::update() {
 
                 // if snake has eaten fruit, generate new position till it's not occupied by snake
                 // at least one cell should be free
-                if (snake.is_occupied(fruit.get_position()) && score < MAX_LENGTH) {
+                if (score < MAX_LENGTH && snake.is_occupied(fruit.get_position())) {
                     do {
                         fruit.generate();
                     } while (snake.is_occupied(fruit.get_position()));
@@ -91,6 +91,7 @@ void Game::update() {
                 // if all cells are occupied, hide fruit
                 if (score == MAX_LENGTH) {
                     fruit.set_visible(false);
+                    fruit.set_position({-1, -1});
                 }
             }
             break;
@@ -159,6 +160,7 @@ void Game::draw_grid() const {
 
 // reset the state of the game before starting a new one
 void Game::reset() {
+    movement_direction = Direction::RIGHT;
     max_tick_time = (difficulty == Difficulty::EASY
                          ? MAX_TIME
                          : (difficulty == Difficulty::MEDIUM

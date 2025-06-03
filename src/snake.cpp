@@ -211,6 +211,8 @@ void Snake::reset() {
     directions.clear();
     previous_direction = direction = Direction::RIGHT;
     map = {GRID_SIZE_X, std::vector<short>(GRID_SIZE_Y, 0)};
+    map[GRID_SIZE_X / 2][GRID_SIZE_X / 2] = 1;
+    map[GRID_SIZE_X / 2 - 1][GRID_SIZE_Y / 2] = 1;
     snake.push_back({GRID_SIZE_X / 2, GRID_SIZE_Y / 2});
     snake.push_back({GRID_SIZE_X / 2 - 1, GRID_SIZE_Y / 2});
     snake_shape.push_back(Snake_shape::HORIZONTAL);

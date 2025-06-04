@@ -8,7 +8,8 @@
 enum class Window {
     MENU,
     GAME,
-    SCORE
+    SCORE,
+    HELP
 };
 
 #endif //WINDOW_H

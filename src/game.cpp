@@ -3,6 +3,9 @@
 //
 
 #include "game.h"
+
+#include <stdexcept>
+
 #include "raylib.h"
 #include "ui.h"
 #include "config.h"
@@ -19,6 +22,10 @@ Game::Game(const std::string &title, int width, int height, int framerate): titl
     SetTargetFPS(framerate);
     SetExitKey(KEY_NULL);
     snake.load_textures("yellow");
+    arrows = LoadTexture("textures/arrows.png");
+    if (!IsTextureValid(arrows)) {
+        throw std::runtime_error("Failed to load arrows texture");
+    }
 }
 
 Game::~Game() {
@@ -51,6 +58,11 @@ void Game::update() {
                     break;
                 }
                 if (UI::is_pressed({(WIDTH - 200) / 2, 340}, {200, 60}, GetMousePosition())) {
+                    // "HELP" button
+                    window = Window::HELP;
+                    break;
+                }
+                if (UI::is_pressed({(WIDTH - 200) / 2, 420}, {200, 60}, GetMousePosition())) {
                     // "EXIT" button
                     should_close = true;
                     break;
@@ -68,7 +80,7 @@ void Game::update() {
 
             get_movement_direction(); // get direction from keyboard
             delta += GetFrameTime();
-            // duration of a tick depends on score and difficulty
+        // duration of a tick depends on score and difficulty
             tick_time = max_tick_time - (max_tick_time - min_tick_time) * score / MAX_LENGTH;
 
             if (delta >= tick_time) {
@@ -109,6 +121,16 @@ void Game::update() {
                     break;
                 }
             }
+            break;
+        case Window::HELP:
+            if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+                if (UI::is_pressed({(WIDTH - 200) / 2, 440}, {200, 60}, GetMousePosition())) {
+                    // "BACK" button
+                    window = Window::MENU;
+                    break;
+                }
+            }
+            break;
     }
 }
 
@@ -141,7 +163,14 @@ void Game::draw_ui() const {
             UI::draw_button("START", {(WIDTH - 200) / 2, 180}, {200, 60},WHITE, RED, 40);
             UI::draw_button("DIFFICULTY\n" + get_difficulty_string(), {(WIDTH - 200) / 2, 260}, {200, 60}, WHITE, RED,
                             20);
-            UI::draw_button("EXIT", {(WIDTH - 200) / 2, 340}, {200, 60}, WHITE, RED, 40);
+            UI::draw_button("HELP", {(WIDTH - 200) / 2, 340}, {200, 60},WHITE, RED, 40);
+            UI::draw_button("EXIT", {(WIDTH - 200) / 2, 420}, {200, 60}, WHITE, RED, 40);
+            break;
+        case Window::HELP:
+            UI::draw_centred_text("Use arrows\nto move the snake", {(WIDTH - 200) / 2, 100}, {200, 100}, BLACK, 40);
+            DrawTextureEx(arrows, {(WIDTH - 2 * 50) / 2, 200}, 0, 2, WHITE);
+            UI::draw_centred_text("Change the difficulty\nto increase/decrease\nthe speed", {(WIDTH - 200) / 2, 300}, {200, 120}, BLACK, 40);
+            UI::draw_button("BACK", {(WIDTH - 200) / 2, 440}, {200, 60},WHITE, RED, 40);
             break;
     }
 }

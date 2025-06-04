@@ -56,23 +56,23 @@ void Snake::draw_head(float x, float y) const {
 }
 
 void Snake::draw_tail(float x, float y) const {
-    switch (*(directions.end()-2)) {
+    switch (*(directions.end() - 2)) {
         case Direction::RIGHT:
             DrawTextureEx(tail_right, {MARGIN_X + x * GRID_STEP, MARGIN_Y + y * GRID_STEP}, 0,
                           static_cast<float>(GRID_STEP) / 30, WHITE);
-        break;
+            break;
         case Direction::LEFT:
             DrawTextureEx(tail_left, {MARGIN_X + x * GRID_STEP, MARGIN_Y + y * GRID_STEP}, 0,
                           static_cast<float>(GRID_STEP) / 30, WHITE);
-        break;
+            break;
         case Direction::UP:
             DrawTextureEx(tail_up, {MARGIN_X + x * GRID_STEP, MARGIN_Y + y * GRID_STEP}, 0,
                           static_cast<float>(GRID_STEP) / 30, WHITE);
-        break;
+            break;
         case Direction::DOWN:
             DrawTextureEx(tail_down, {MARGIN_X + x * GRID_STEP, MARGIN_Y + y * GRID_STEP}, 0,
                           static_cast<float>(GRID_STEP) / 30, WHITE);
-        break;
+            break;
     }
 }
 
@@ -168,7 +168,7 @@ int Snake::get_length() const {
     return snake.size();
 }
 
-void Snake::load_textures(const std::string& skin) {
+void Snake::load_textures(const std::string &skin) {
     vertical_texture = LoadTexture(("textures/" + skin + "/vertical.png").c_str());
     horizontal_texture = LoadTexture(("textures/" + skin + "/horizontal.png").c_str());
     down_right_texture = LoadTexture(("textures/" + skin + "/down_right.png").c_str());
@@ -183,6 +183,13 @@ void Snake::load_textures(const std::string& skin) {
     tail_down = LoadTexture(("textures/" + skin + "/tail_down.png").c_str());
     tail_left = LoadTexture(("textures/" + skin + "/tail_left.png").c_str());
     tail_right = LoadTexture(("textures/" + skin + "/tail_right.png").c_str());
+    if (!(IsTextureValid(vertical_texture) && IsTextureValid(horizontal_texture) && IsTextureValid(down_right_texture)
+          && IsTextureValid(down_left_texture) && IsTextureValid(up_left_texture) && IsTextureValid(up_right_texture) &&
+          IsTextureValid(head_down) && IsTextureValid(head_left) && IsTextureValid(head_right) &&
+          IsTextureValid(head_up) && IsTextureValid(tail_down) && IsTextureValid(tail_left) &&
+          IsTextureValid(tail_right) && IsTextureValid(tail_up))) {
+        throw std::runtime_error("Could not load snake textures");
+    }
 }
 
 void Snake::unload_textures() {

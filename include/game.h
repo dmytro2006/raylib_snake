@@ -54,6 +54,8 @@ private:
 
     Direction movement_direction;
     Direction previous_direction;
+
+    Texture arrows;
 };
 
 #endif //GAME_H

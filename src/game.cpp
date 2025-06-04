@@ -12,7 +12,7 @@
 
 Game::Game(const std::string &title, int width, int height, int framerate): title(title), width(width), height(height),
                                                                             framerate(framerate), should_close(false),
-                                                                            window(Window::MENU), score(1),
+                                                                            window(Window::MENU), score(0),
                                                                             difficulty(Difficulty::EASY),
                                                                             tick_time(0), max_tick_time(0),
                                                                             min_tick_time(0),
@@ -93,18 +93,18 @@ void Game::update() {
                 if (snake.is_dead()) {
                     window = Window::SCORE;
                 }
-                score = snake.get_length();
+                score = snake.get_length() - 2;
 
                 // if snake has eaten fruit, generate new position till it's not occupied by snake
                 // at least one cell should be free
-                if (score < MAX_LENGTH && snake.is_occupied(fruit.get_position())) {
+                if (score + 2 < MAX_LENGTH && snake.is_occupied(fruit.get_position())) {
                     do {
                         fruit.generate();
                     } while (snake.is_occupied(fruit.get_position()));
                 }
 
                 // if all cells are occupied, hide fruit
-                if (score == MAX_LENGTH) {
+                if (score + 2 == MAX_LENGTH) {
                     fruit.set_visible(false);
                     fruit.set_position({-1, -1});
                 }
@@ -224,7 +224,7 @@ void Game::reset() {
                                 ? MIN_TIME * MEDIUM_MULTIPLIER
                                 : MIN_TIME * HARD_MULTIPLIER));
     snake.reset();
-    score = 1;
+    score = 0;
     delta = 0;
     do {
         fruit.generate();

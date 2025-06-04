@@ -56,8 +56,8 @@ void Game::update() {
                     break;
                 }
                 if (UI::is_pressed({(WIDTH - 200) / 2, 260}, {200, 60}, GetMousePosition())) {
-                    // "DIFFICULTY" button
-                    difficulty = static_cast<Difficulty>((static_cast<int>(difficulty) + 1) % 3);
+                    // "SETTINGS" button
+                    window = Window::SETTINGS;
                     break;
                 }
                 if (UI::is_pressed({(WIDTH - 200) / 2, 340}, {200, 60}, GetMousePosition())) {
@@ -127,15 +127,29 @@ void Game::update() {
             break;
         case Window::HELP:
             if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
-                if (UI::is_pressed({(WIDTH - 200) / 2, 440}, {200, 60}, GetMousePosition())) {
+                if (UI::is_pressed({(WIDTH - 200) / 2, 460}, {200, 60}, GetMousePosition())) {
                     // "BACK" button
                     window = Window::MENU;
                     break;
                 }
             }
             break;
+        case Window::SETTINGS:
+            if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+                if (UI::is_pressed({(WIDTH - 200) / 2, 260}, {200, 60}, GetMousePosition())) {
+                    // "DIFFICULTY" button
+                    difficulty = static_cast<Difficulty>((static_cast<int>(difficulty) + 1) % 3);
+                    break;
+                }
+                if (UI::is_pressed({(WIDTH - 200) / 2, 340}, {200, 60}, GetMousePosition())) {
+                    // "BACK" button
+                    window = Window::MENU;
+                    break;
+                }
+            }
     }
 }
+
 
 void Game::draw() const {
     BeginDrawing();
@@ -164,16 +178,22 @@ void Game::draw_ui() const {
         case Window::MENU:
             UI::draw_centred_text("SNAKE", {0, 40}, {WIDTH, 100}, BLACK, 80);
             UI::draw_button("START", {(WIDTH - 200) / 2, 180}, {200, 60},WHITE, RED, 40);
-            UI::draw_button("DIFFICULTY\n" + get_difficulty_string(), {(WIDTH - 200) / 2, 260}, {200, 60}, WHITE, RED,
-                            20);
+            UI::draw_button("SETTINGS", {(WIDTH - 200) / 2, 260}, {200, 60}, WHITE, RED,
+                            35);
             UI::draw_button("HELP", {(WIDTH - 200) / 2, 340}, {200, 60},WHITE, RED, 40);
             UI::draw_button("EXIT", {(WIDTH - 200) / 2, 420}, {200, 60}, WHITE, RED, 40);
             break;
         case Window::HELP:
             UI::draw_centred_text("Use arrows\nto move the snake", {(WIDTH - 200) / 2, 100}, {200, 100}, BLACK, 40);
             DrawTextureEx(arrows, {(WIDTH - 2 * 50) / 2, 200}, 0, 2, WHITE);
-            UI::draw_centred_text("Change the difficulty\nto increase/decrease\nthe speed", {(WIDTH - 200) / 2, 300}, {200, 120}, BLACK, 40);
-            UI::draw_button("BACK", {(WIDTH - 200) / 2, 440}, {200, 60},WHITE, RED, 40);
+            UI::draw_centred_text("Change the difficulty\nto increase/decrease\nthe speed", {(WIDTH - 200) / 2, 300},
+                                  {200, 120}, BLACK, 40);
+            UI::draw_button("BACK", {(WIDTH - 200) / 2, 460}, {200, 60},WHITE, RED, 40);
+            break;
+        case Window::SETTINGS:
+            UI::draw_button("DIFFICULTY\n" + get_difficulty_string(), {(WIDTH - 200) / 2, 260}, {200, 60}, WHITE, RED,
+                            20);
+            UI::draw_button("BACK", {(WIDTH - 200) / 2, 340}, {200, 60},WHITE, RED, 40);
             break;
     }
 }

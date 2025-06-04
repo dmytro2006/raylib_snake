@@ -34,6 +34,16 @@ private:
 
     std::string get_difficulty_string() const;
 
+    enum class SnakeSkin { S_GREEN, S_YELLOW, COUNT }; // Only green and yellow
+
+    void cycle_snake_skin();
+    std::string get_snake_skin_string() const;
+
+    std::string snake_skin{"green"};
+    SnakeSkin current_skin{SnakeSkin::S_GREEN};
+
+    std::string snake_skin_to_string(SnakeSkin skin) const;
+
     std::string title;
     int width;
     int height;

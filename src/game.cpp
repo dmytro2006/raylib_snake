@@ -10,18 +10,22 @@
 #include "ui.h"
 #include "config.h"
 
-Game::Game(const std::string &title, int width, int height, int framerate): title(title), width(width), height(height),
-                                                                            framerate(framerate), should_close(false),
-                                                                            window(Window::MENU), score(0),
-                                                                            difficulty(Difficulty::EASY),
-                                                                            tick_time(0), max_tick_time(0),
-                                                                            min_tick_time(0),
-                                                                            movement_direction(Direction::RIGHT),
-                                                                            previous_direction(Direction::RIGHT) {
+Game::Game(const std::string &title, int width, int height, int framerate)
+    : title(title), width(width), height(height),
+      framerate(framerate), should_close(false),
+      window(Window::MENU), score(0),
+      difficulty(Difficulty::EASY),
+      tick_time(0), max_tick_time(0),
+      min_tick_time(0),
+      movement_direction(Direction::RIGHT),
+      previous_direction(Direction::RIGHT),
+      snake_skin("green"),
+      current_skin(SnakeSkin::S_GREEN) // initialize enum
+{
     InitWindow(width, height, title.c_str());
     SetTargetFPS(framerate);
     SetExitKey(KEY_NULL);
-    snake.load_textures("yellow");
+    snake.load_textures(snake_skin);
     fruit.load_textures();
     arrows = LoadTexture("textures/arrows.png");
     if (!IsTextureValid(arrows)) {
@@ -136,6 +140,13 @@ void Game::update() {
             break;
         case Window::SETTINGS:
             if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+                if (UI::is_pressed({(WIDTH - 200) / 2, 180}, {200, 60}, GetMousePosition())) {
+                    // "SNAKE SKIN" button
+                    snake.unload_textures();
+                    cycle_snake_skin();
+                    snake.load_textures(snake_skin);
+                    break;
+                }
                 if (UI::is_pressed({(WIDTH - 200) / 2, 260}, {200, 60}, GetMousePosition())) {
                     // "DIFFICULTY" button
                     difficulty = static_cast<Difficulty>((static_cast<int>(difficulty) + 1) % 3);
@@ -191,8 +202,8 @@ void Game::draw_ui() const {
             UI::draw_button("BACK", {(WIDTH - 200) / 2, 460}, {200, 60},WHITE, RED, 40);
             break;
         case Window::SETTINGS:
-            UI::draw_button("DIFFICULTY\n" + get_difficulty_string(), {(WIDTH - 200) / 2, 260}, {200, 60}, WHITE, RED,
-                            20);
+            UI::draw_button("SNAKE SKIN\n" + get_snake_skin_string(), {(WIDTH - 200) / 2, 180}, {200, 60}, WHITE, RED, 20);
+            UI::draw_button("DIFFICULTY\n" + get_difficulty_string(), {(WIDTH - 200) / 2, 260}, {200, 60}, WHITE, RED, 20);
             UI::draw_button("BACK", {(WIDTH - 200) / 2, 340}, {200, 60},WHITE, RED, 40);
             break;
     }
@@ -261,4 +272,23 @@ std::string Game::get_difficulty_string() const {
             return "HARD";
     }
     return "";
+}
+
+// Cycle through available snake skins
+void Game::cycle_snake_skin() {
+    int next = (static_cast<int>(current_skin) + 1) % static_cast<int>(SnakeSkin::COUNT);
+    current_skin = static_cast<SnakeSkin>(next);
+    snake_skin = snake_skin_to_string(current_skin);
+}
+
+std::string Game::get_snake_skin_string() const {
+    return snake_skin_to_string(current_skin);
+}
+
+std::string Game::snake_skin_to_string(SnakeSkin skin) const {
+    switch (skin) {
+        case SnakeSkin::S_GREEN:  return "green";
+        case SnakeSkin::S_YELLOW: return "yellow";
+        default: return "green";
+    }
 }

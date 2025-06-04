@@ -22,6 +22,7 @@ Game::Game(const std::string &title, int width, int height, int framerate): titl
     SetTargetFPS(framerate);
     SetExitKey(KEY_NULL);
     snake.load_textures("yellow");
+    fruit.load_textures();
     arrows = LoadTexture("textures/arrows.png");
     if (!IsTextureValid(arrows)) {
         throw std::runtime_error("Failed to load arrows texture");
@@ -30,6 +31,8 @@ Game::Game(const std::string &title, int width, int height, int framerate): titl
 
 Game::~Game() {
     snake.unload_textures();
+    fruit.unload_textures();
+    UnloadTexture(arrows);
     CloseWindow();
 }
 

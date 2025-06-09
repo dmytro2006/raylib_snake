@@ -1,10 +1,12 @@
-cmake_minimum_required(VERSION 3.30)
+cmake_minimum_required(VERSION 3.28)
 project(raylib_snake)
 
 set(CMAKE_CXX_STANDARD 14)
 
 # static linking
-set(CMAKE_CXX_FLAGS "-static")
+if(WINDOWS)
+    set(CMAKE_CXX_FLAGS "-static")
+endif ()
 
 # Dependencies
 set(RAYLIB_VERSION 5.5)

@@ -21,9 +21,16 @@ public:
 
     void set_visible(bool visible);
 
+    void set_position(Vector2 position);
+
+    void load_textures();
+
+    void unload_textures();
+
 private:
     Vector2 position{};
     bool visible = true;
+    Texture fruit;
 };
 
 

@@ -289,6 +289,7 @@ std::string Game::snake_skin_to_string(SnakeSkin skin) const {
     switch (skin) {
         case SnakeSkin::S_GREEN:  return "green";
         case SnakeSkin::S_YELLOW: return "yellow";
+        // case SnakeSkin::S_GREEN_DOTTED: return "green_dotted";
         default: return "green";
     }
 }

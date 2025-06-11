@@ -240,6 +240,7 @@ void Game::reset() {
     do {
         fruit.generate();
     } while (snake.is_occupied(fruit.get_position()));
+    fruit.set_visible(true);
 }
 
 // get movement direction from keyboard
